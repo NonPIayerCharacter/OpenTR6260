@@ -42,10 +42,10 @@
 int spiFlash_OTP_Read(int addr,int length,unsigned char *pdata);
 void spiFlash_OTP_Lock(int LB);
 int spiFlash_OTP_Se(unsigned int addr);
-int hal_spifiash_OTPWrite(unsigned int addr, unsigned int len, unsigned char * buf);
+int hal_spiflash_OTPWrite(unsigned int addr, unsigned int len, unsigned char * buf);
 
 int hal_spiflash_read(unsigned int addr, unsigned char * buf, unsigned int len);
-int hal_spifiash_write(unsigned int addr, unsigned char * buf, unsigned int len);
+int hal_spiflash_write(unsigned int addr, unsigned char * buf, unsigned int len);
 int hal_spiflash_erase(unsigned int addr,  unsigned int len);
 void hal_spiflash_init(void);
 void hal_spiflash_exit(void);

@@ -133,7 +133,7 @@ char otaHal_write(const unsigned char * data, unsigned short len)
         progress = g_otaInfo.offset * 100 / g_otaInfo.data_len;
         system_printf("download firmware(%d%)\n", g_otaInfo.offset * 100 / g_otaInfo.data_len);
     }
-    hal_spifiash_write(g_otaInfo.s_addr + g_otaInfo.offset, (unsigned char *)data, len);
+    hal_spiflash_write(g_otaInfo.s_addr + g_otaInfo.offset, (unsigned char *)data, len);
     g_otaInfo.offset += len;
 
     return 0;
@@ -158,8 +158,8 @@ char otaHal_done(void)
         system_printf("offset=%x datalen=%x\n", g_otaInfo.offset, g_otaInfo.data_len);
         system_printf("crc=%x\n", state.crc);
 
-        hal_spifiash_write(g_otaInfo.e_addr - 2 * OTA_STAT_PART_SIZE, (unsigned char *)&state, sizeof(state));
-        hal_spifiash_write(g_otaInfo.e_addr - OTA_STAT_PART_SIZE, (unsigned char *)&state, sizeof(state));
+        hal_spiflash_write(g_otaInfo.e_addr - 2 * OTA_STAT_PART_SIZE, (unsigned char *)&state, sizeof(state));
+        hal_spiflash_write(g_otaInfo.e_addr - OTA_STAT_PART_SIZE, (unsigned char *)&state, sizeof(state));
         system_printf("ota begin to reboot system!!!!");
     } else {
         system_printf("ota download not completely. fileLen=0x%x downloadLen=0x%x\n", g_otaInfo.data_len,  g_otaInfo.offset);

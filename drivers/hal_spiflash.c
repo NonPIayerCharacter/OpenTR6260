@@ -1438,7 +1438,7 @@ static void spiflash_OTP_Program(spi_reg * pSpiReg, unsigned int addr, unsigned 
 		}
 	}
 }
-int hal_spifiash_OTPWrite(unsigned int addr, unsigned int len, unsigned char * buf)
+int hal_spiflash_OTPWrite(unsigned int addr, unsigned int len, unsigned char * buf)
 {
 	unsigned int address, flag, j, length, data;
 	spi_reg * spiReg = spiDev.spiReg;
@@ -1833,7 +1833,7 @@ int hal_spiflash_read(unsigned int addr, unsigned char * buf, unsigned int len)
 
 
 
-int hal_spifiash_write(unsigned int addr, unsigned char * buf, unsigned int len)
+int hal_spiflash_write(unsigned int addr, unsigned char * buf, unsigned int len)
 {
 	unsigned int address, flag, j, length, data;
 	spi_reg * spiReg = spiDev.spiReg;
@@ -1874,7 +1874,7 @@ int hal_spifiash_write(unsigned int addr, unsigned char * buf, unsigned int len)
 		spiflash_program(spiReg, address, buf+(address - addr), length);
 		//system_irq_restore(flag);
 
-		//system_printf("hal_spifiash_write, des: %#x, src: %#x, len: %d\n", address, buf+(address - addr), length);
+		//system_printf("hal_spiflash_write, des: %#x, src: %#x, len: %d\n", address, buf+(address - addr), length);
 
 		len -= length;
 		address += length;
@@ -2036,7 +2036,7 @@ static int sf_partion(cmd_tbl_t *t, int argc, char *argv[])
 	num = strtoul(argv[1], NULL, 0);
 	hal_spiflash_erase(0x3000, 0x1000);
 	//ret = hal_spiflash_erase((unsigned int)(512*1024), 0x1000);
-	hal_spifiash_write((unsigned int)(0x3ffc), (unsigned char *)&num, 4);
+	hal_spiflash_write((unsigned int)(0x3ffc), (unsigned char *)&num, 4);
 
 	system_printf("sf_partion, %d\n", num);
 	return CMD_RET_SUCCESS;
@@ -2105,8 +2105,8 @@ static int sf_otp_write(cmd_tbl_t *t, int argc, char *argv[])
 		sfTest[i] = i;
 		
 	}
-	hal_spifiash_OTPWrite(addr, length, (unsigned char *)sfTest);
-//	system_printf("hal_spifiash_write, des: 0x%x, len: %d\n", addr,length);
+	hal_spiflash_OTPWrite(addr, length, (unsigned char *)sfTest);
+//	system_printf("hal_spiflash_write, des: 0x%x, len: %d\n", addr,length);
 	
 	return CMD_RET_SUCCESS;
 }
@@ -2337,7 +2337,7 @@ CMD(sf_id,
 			for(i=0; i<F_SIZE; i++)
 				sfTest[i] = i;
 		
-			hal_spifiash_write(F_ADDR-64, (unsigned char *)sfTest, F_SIZE);
+			hal_spiflash_write(F_ADDR-64, (unsigned char *)sfTest, F_SIZE);
 			system_printf("sf_program, %d\n", ret);
 		
 			return CMD_RET_SUCCESS;
@@ -2411,7 +2411,7 @@ static int sf_program(cmd_tbl_t *t, int argc, char *argv[])
 	for(i=0; i<F_SIZE; i++)
 		sfTest[i] = i;
 
-	hal_spifiash_write(F_ADDR-64, (unsigned char *)sfTest, F_SIZE);
+	hal_spiflash_write(F_ADDR-64, (unsigned char *)sfTest, F_SIZE);
 	system_printf("sf_program, %d\n", ret);
 
 	return CMD_RET_SUCCESS;

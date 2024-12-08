@@ -213,13 +213,6 @@ static unsigned int  env_total_len = 0;
 
 
 
-#define PARTION_INDEX_MAX			8
-
-#define PARTION_LMA_ANDES1		0x4000
-#define PARTION_LMA_ANDES2		0x80000
-#define PARTION_LMA_NV_USR		0xFB000
-#define PARTION_LMA_NV_BACKUP		0xFE000
-#define PARTION_LMA_NV_AMT		0xFF000
 
 #define KEY_MAX_LEN		16
 
@@ -1911,7 +1904,7 @@ int partion_parser(env_meta_data_t env)
 }
 
 
-int  partion_info_get(char *key, unsigned int *addr, unsigned int * length)
+int partion_info_get(char *key, unsigned int *addr, unsigned int * length)
 {
 	int i;
 	unsigned int base = 0, len = 0;
@@ -1933,7 +1926,12 @@ int  partion_info_get(char *key, unsigned int *addr, unsigned int * length)
 		else if (!strncmp(key, PARTION_NAME_NV_USR, strlen(PARTION_NAME_NV_USR)))
 		{
 			base = PARTION_LMA_NV_USR;
-			len = 0x3000;
+			len = 0x20000;
+		}
+		else if (!strncmp(key, PARTION_NAME_LFS, strlen(PARTION_NAME_LFS)))
+		{
+			base = PARTION_LMA_LFS;
+			len = 0x20000;
 		}
 		else if (!strncmp(key, PARTION_NAME_NV_AMT, strlen(PARTION_NAME_NV_AMT)))
 		{

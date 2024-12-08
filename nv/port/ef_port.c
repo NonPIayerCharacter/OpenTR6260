@@ -132,10 +132,10 @@ EfErrCode ef_port_write(uint32_t addr, const uint32_t *buf, size_t size) {
             return EF_WRITE_ERR;
         }
         memcpy(bufTemp, buf, size);
-        result = hal_spifiash_write(addr, (unsigned char *)bufTemp, size);
+        result = hal_spiflash_write(addr, (unsigned char *)bufTemp, size);
         vPortFree(bufTemp);
     } else {
-        result = hal_spifiash_write(addr, (unsigned char *)buf, size);
+        result = hal_spiflash_write(addr, (unsigned char *)buf, size);
     }
 	
     if(result != EF_NO_ERR){

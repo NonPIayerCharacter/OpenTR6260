@@ -134,6 +134,7 @@ void backup_print_env(void);
 #define PARTION_NAME_DATA_KEY	"data_key" // add by wangxia 20200226
 #define PARTION_NAME_DATA_SSL	"data_ssl"
 #define PARTION_NAME_DATA_OTA	"data_ota"
+#define PARTION_NAME_LFS		"lfs"
 
 
 int partion_info_get(char *key, unsigned int *addr, unsigned int * length);

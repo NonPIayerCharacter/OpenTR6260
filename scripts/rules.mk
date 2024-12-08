@@ -141,15 +141,18 @@ endif  # ifeq (,$(ota))
 	
 
 $(OBJ_PATH)/%.o:%.cpp | $(OBJ_PATH)
-	@echo "compil_cppe $<"
+	@if [ ! -d $(dir $@) ]; then mkdir -p $(dir $@); fi
+	@echo "compil_cpp $<"
 	@$(CC) -E -MMD $(CFLAGS) $(CPPFLAGS) -c $< -o $@.i
 	@$(CC) -MMD $(CFLAGS) $(CPPFLAGS) -c $< -o $@
 
 $(OBJ_PATH)/%.c.o:%.c $(TOPDIR)/scripts/rules.mk | $(OBJ_PATH)
+	@if [ ! -d $(dir $@) ]; then mkdir -p $(dir $@); fi
 	@echo "compile_c $<"
 	@$(CC) -MMD $(CFLAGS) -c $< -o $@
 
 $(OBJ_PATH)/%.S.o:%.S $(TOPDIR)/scripts/rules.mk | $(OBJ_PATH)
+	@if [ ! -d $(dir $@) ]; then mkdir -p $(dir $@); fi
 	@echo "compile_s $<"
 	@$(AS) -MMD $(CFLAGS) $(ASFLAGS) -c $< -o $@
 
@@ -157,18 +160,7 @@ $(OUT_PATH):
 	@mkdir -p $@/$(type)/$(TARGET)
 
 $(OBJ_PATH): $(OUT_PATH)
-	@mkdir -p $@
-	@mkdir -p $@/base64
-	@mkdir -p $@/bitmessage
-	@mkdir -p $@/cJSON
-	@mkdir -p $@/cmnds
-	@mkdir -p $@/devicegroups
-	@mkdir -p $@/driver
-	@mkdir -p $@/hal/tr6260
-	@mkdir -p $@/httpserver
-	@mkdir -p $@/jsmn
-	@mkdir -p $@/mqtt
-	@mkdir -p $@/logging
+	@if [ ! -d $(dir $@) ]; then mkdir -p $(dir $@); fi
 
 clean:
 	@rm -rf $(OUT_PATH)/$(type)/$(TARGET)

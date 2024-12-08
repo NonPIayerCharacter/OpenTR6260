@@ -986,7 +986,7 @@ static int flash_rw_operation(char*data,int datalen,int op_type)
 	{
 		if(FLASH_DUMPOP_WRITE==op_type)
 		{
-			hal_spifiash_write(g_flash_addr_forsave, (unsigned char *)data,datalen);
+			hal_spiflash_write(g_flash_addr_forsave, (unsigned char *)data,datalen);
 		}
 		else if(FLASH_DUMPOP_READ==op_type)
 		{
@@ -1085,12 +1085,13 @@ void nds32_die(struct pt_regs *pt)
     ef_set_env_blob(NV_STARTUP_TYPE, &rst_reason, sizeof(int));
 #endif
 	panic_printf("System halted...\n");
-	saved_pt=pt;
 
-
-	flash_dump(pt,&tsk);
-	mem_dump();
-
+	wdt_reset_chip(0);
+	//saved_pt=pt;
+	//
+	//
+	//flash_dump(pt,&tsk);
+	//mem_dump();
 }
 
 

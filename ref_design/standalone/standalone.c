@@ -30,7 +30,7 @@
 /****************************************************************************
 * 	                                           Local Macros
 ****************************************************************************/
-#define WPA_SUPPLICANT_STACK_SIZE (10000)
+#define WPA_SUPPLICANT_STACK_SIZE (8192)
 
 /****************************************************************************
 * 	                                           Local Types
@@ -211,7 +211,3 @@ void vApplicationMallocFailedHook( void )
 	   configTOTAL_HEAP_SIZE configuration constant in FreeRTOSConfig.h. */
 	for( ;; );
 }
-
-
-
-

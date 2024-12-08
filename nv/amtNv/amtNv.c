@@ -180,7 +180,7 @@ void amt_nv_search(unsigned int addr, struct amt_nv_head_t *pHead, int * index_s
 					else
 					{
 						state = AMT_NV_STATE_DELE;
-						hal_spifiash_write(addr + i *AMT_NV_BLOCK_SIZE + 2 , (unsigned char *)(&state), 2);
+						hal_spiflash_write(addr + i *AMT_NV_BLOCK_SIZE + 2 , (unsigned char *)(&state), 2);
 					}
 				}
 				break;
@@ -281,12 +281,12 @@ void amt_nv_gc(unsigned int addr, unsigned char * buf, unsigned int len)
 
 	unsigned char state = 0;
 
-	hal_spifiash_write(AMT_NV_BACKUP_BEGIN , (unsigned char *)(&state), 1);
-	hal_spifiash_write(AMT_NV_BACKUP_ADDR, cache, AMT_NV_SIZE);
-	hal_spifiash_write(AMT_NV_BACKUP_COMP, (unsigned char *)(&state), 1);
+	hal_spiflash_write(AMT_NV_BACKUP_BEGIN , (unsigned char *)(&state), 1);
+	hal_spiflash_write(AMT_NV_BACKUP_ADDR, cache, AMT_NV_SIZE);
+	hal_spiflash_write(AMT_NV_BACKUP_COMP, (unsigned char *)(&state), 1);
 
 	hal_spiflash_erase(amt_partion_base, AMT_PARTION_SIZE);
-	hal_spifiash_write(amt_partion_base, cache, AMT_NV_SIZE);
+	hal_spiflash_write(amt_partion_base, cache, AMT_NV_SIZE);
 	hal_spiflash_erase(AMT_NV_BACKUP_BASE, AMT_PARTION_SIZE);
 
 }
@@ -342,12 +342,12 @@ int  amt_nv_write(unsigned int addr, unsigned char * buf, unsigned int len)
 	}
 	else
 	{
-		hal_spifiash_write(addr + index_alloc *AMT_NV_BLOCK_SIZE , (unsigned char *)pHead, len +AMT_NV_HEAD_SIZE);
+		hal_spiflash_write(addr + index_alloc *AMT_NV_BLOCK_SIZE , (unsigned char *)pHead, len +AMT_NV_HEAD_SIZE);
 
 		if(index_search < AMT_NV_BLOCK_NUM)
 		{
 			state = AMT_NV_STATE_DELE;
-			hal_spifiash_write(addr + index_search *AMT_NV_BLOCK_SIZE + 2 , (unsigned char *)(&state), 2);
+			hal_spiflash_write(addr + index_search *AMT_NV_BLOCK_SIZE + 2 , (unsigned char *)(&state), 2);
 		}
 	}
 	vPortFree((void *)pHead);
@@ -388,7 +388,7 @@ void amt_nv_init(void)
 	{
 		hal_spiflash_read(AMT_NV_BACKUP_ADDR, cache, AMT_NV_SIZE);
 		hal_spiflash_erase(amt_partion_base, AMT_PARTION_SIZE);
-		hal_spifiash_write(amt_partion_base, cache, AMT_NV_SIZE);
+		hal_spiflash_write(amt_partion_base, cache, AMT_NV_SIZE);
 		hal_spiflash_erase(AMT_NV_BACKUP_BASE, AMT_PARTION_SIZE);
 	}
 	else

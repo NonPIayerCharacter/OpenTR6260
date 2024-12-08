@@ -69,7 +69,7 @@ static sys_err_t system_event_sta_got_ip_default(system_event_t *event)
 	TrPsmSetDeviceIdle(PSM_DEVICE_WIFI_STA);
 	TrPsmWifistore();
 #endif
-#ifdef LWIP_SNTP
+#if 0//LWIP_SNTP
     extern void sntp_start(void);
     sntp_start();
 #endif
@@ -81,7 +81,7 @@ static sys_err_t system_event_sta_lost_ip_default(system_event_t *event)
 #ifdef _USE_PSM
 	TrPsmSetDeviceActive(PSM_DEVICE_WIFI_STA);
 #endif
-#ifdef LWIP_SNTP
+#if 0//LWIP_SNTP
     extern void sntp_stop(void);
     sntp_stop();
 #endif

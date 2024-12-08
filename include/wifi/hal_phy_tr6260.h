@@ -33,8 +33,8 @@ ST_phy_amt_pkt_tx phy_amt_tx_pkt_rcd(bool start_flag/*0:stop 1:start*/);
 ST_phy_amt_rx phy_amt_rx_test(uint8_t ch, bool start_flag/*0:stop 1:start*/);
 #endif
 
-#define BIT_CLR(value,bit) (*(volatile uint32_t*)(value) = (*(volatile uint32_t*)(value))&(~(1<<(bit))));
-#define BIT_SET(value,bit) (*(volatile uint32_t*)(value) = (*(volatile uint32_t*)(value))|(1<<(bit)));
+//#define BIT_CLR(value,bit) (*(volatile uint32_t*)(value) = (*(volatile uint32_t*)(value))&(~(1<<(bit))));
+//#define BIT_SET(value,bit) (*(volatile uint32_t*)(value) = (*(volatile uint32_t*)(value))|(1<<(bit)));
 
 void hal_phy_init();
 

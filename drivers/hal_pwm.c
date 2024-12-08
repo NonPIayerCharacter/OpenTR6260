@@ -161,6 +161,40 @@ int32_t pwm_deinit(uint32_t channel)
 		return DRV_ERR_INVALID_PARAM;
 	}
 
+	switch(channel)
+	{
+		case PMW_CHANNEL_0:
+			PIN_FUNC_SET(IO_MUX0_GPIO20, FUNC_GPIO20_GPIO20);
+			break;
+
+		case PMW_CHANNEL_1:
+			PIN_FUNC_SET(IO_MUX0_GPIO21, FUNC_GPIO21_GPIO21);
+			break;
+
+		case PMW_CHANNEL_2:
+			PIN_FUNC_SET(IO_MUX0_GPIO22, FUNC_GPIO22_GPIO22);
+			break;
+
+#if defined (_USR_TR6260)
+
+		case PMW_CHANNEL_3:
+			PIN_FUNC_SET(IO_MUX0_GPIO23, FUNC_GPIO23_GPIO23);
+			break;
+
+		case PMW_CHANNEL_4:
+			PIN_FUNC_SET(IO_MUX0_GPIO24, FUNC_GPIO24_GPIO24);
+			break;
+
+#endif
+
+#ifndef _USER_LMAC_SDIO
+		case PMW_CHANNEL_5:
+			PIN_FUNC_SET(IO_MUX0_GPIO13, FUNC_GPIO13_GPIO13);
+			break;
+#endif
+
+	}
+
 	return DRV_SUCCESS;
 }
 

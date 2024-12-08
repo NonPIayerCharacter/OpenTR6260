@@ -164,10 +164,10 @@ typedef enum
 
 typedef struct 
 {
-	DRV_GPIO_PIN_NAME			 GPIO_Pin;			
-	//DRV_GPIO_DIR 	 		 	 GPIO_Dir;
-	DRV_GPIO_PULL_ENABLE	 	 GPIO_PullEn;
-	DRV_GPIO_PULL_TYPE	 	     GPIO_PullType;
+	DRV_GPIO_PIN_NAME			GPIO_Pin;
+	DRV_GPIO_DIR				GPIO_Dir;
+	DRV_GPIO_PULL_ENABLE		GPIO_PullEn;
+	DRV_GPIO_PULL_TYPE			GPIO_PullType;
 } DRV_GPIO_CONFIG;
 
 typedef struct

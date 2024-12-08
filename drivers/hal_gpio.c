@@ -203,7 +203,6 @@ int32_t gpio_config(DRV_GPIO_CONFIG *pGpioConfig)
 		//other status
 	 }
 
-	 #if 0
 	 //-------------3.set dir----------
 	 RegTmp = IN32(GPIO_CHNNL_DIR);
 	 if(pGpiocfgTemp->GPIO_Dir == DRV_GPIO_DIR_INPUT) //set corresponding bit to 0
@@ -220,7 +219,6 @@ int32_t gpio_config(DRV_GPIO_CONFIG *pGpioConfig)
 	 {
 		//other status
 	 }
-	 #endif
 
     //unlock irq 
 	  system_irq_restore(flag);

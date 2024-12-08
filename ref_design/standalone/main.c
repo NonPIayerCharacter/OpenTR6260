@@ -14,33 +14,12 @@ TaskHandle_t g_sys_task_handle1;
 
 void sys_task1(void* pvParameters)
 {
-	Main_Init();
 	while(true)
 	{
 		sys_delay_ms(1000);
 		Main_OnEverySecond();
 		//system_printf("Main_OnEverySecond\n");
 	}
-}
-
-int32_t OpenBeken(void)
-{
-	BaseType_t ret = xTaskCreate(
-		sys_task1,
-		"OpenBeken",
-		8192,
-		NULL,
-		3,
-		&g_sys_task_handle1);
-	if(ret == pdPASS)
-	{
-		system_printf("[%s, %d] task created\n", __func__, __LINE__);
-		util_trace_stack_add_task(g_sys_task_handle1);
-	}
-	else
-		system_printf("[%s, %d] task creation failed!(0x%x)\n", __func__, __LINE__);
-
-	return 0;
 }
 
 int32_t Wifi_Init(void)
@@ -52,7 +31,6 @@ int32_t Wifi_Init(void)
 	{
 		wifi_drv_init();
 		standalone_main();
-		OpenBeken();
 		wifi_load_nv_cfg();
 	}
 	else
@@ -61,7 +39,7 @@ int32_t Wifi_Init(void)
 		nrf_rtc_cal();
 	}
 
-	util_cli_freertos_init(util_cmd_run_command);
+	//util_cli_freertos_init(util_cmd_run_command);
 
 	return 0;
 }
@@ -92,10 +70,19 @@ int main()
 
 	partion_init();
 	easyflash_init();
-	//TrPsmInit();
+	TrPsmInit();
 	Wifi_Init();
 	time_check_temp();
 	Hal_WtdSoftTask_Init();
+
+	Main_Init();
+	xTaskCreate(
+		sys_task1,
+		"OpenBeken",
+		8 * 256,
+		NULL,
+		SYSTEM_CLI_TASK_PRIORITY,
+		&g_sys_task_handle1);
 
 	vTaskStartScheduler();
 #endif

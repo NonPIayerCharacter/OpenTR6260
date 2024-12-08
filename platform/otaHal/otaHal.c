@@ -188,7 +188,7 @@ char otaHal_write(const unsigned char * data, unsigned short len)
 			}
 		}
 	
-		hal_spifiash_write(ota_info.s_addr + ota_info.offset, (unsigned char *)data, len);
+		hal_spiflash_write(ota_info.s_addr + ota_info.offset, (unsigned char *)data, len);
 		ota_info.offset += len;
 		return TRS_OK;
 	}
@@ -216,7 +216,7 @@ char otaHal_write(const unsigned char * data, unsigned short len)
 		if( ota_info.offset > ota_info.data_len )
 		{
 			//system_printf("---write f, addr[0x%08x], len[%d]", ota_info.s_addr + ota_info.offset - ota_info.data_len, len);
-			hal_spifiash_write(ota_info.s_addr + ota_info.offset - ota_info.data_len, (unsigned char *)data, len);
+			hal_spiflash_write(ota_info.s_addr + ota_info.offset - ota_info.data_len, (unsigned char *)data, len);
 			ota_info.offset += len;
 		} 
 		else
@@ -226,7 +226,7 @@ char otaHal_write(const unsigned char * data, unsigned short len)
 			{
 				length_temp = ota_info.offset - ota_info.data_len;
 				//system_printf("---write f, data[0x%p], len[%d]", (unsigned char *)data + (len - length_temp), length_temp);
-				hal_spifiash_write(ota_info.s_addr, (unsigned char *)data + (len - length_temp), length_temp);
+				hal_spiflash_write(ota_info.s_addr, (unsigned char *)data + (len - length_temp), length_temp);
 			}
 		}
 	} 
@@ -237,7 +237,7 @@ char otaHal_write(const unsigned char * data, unsigned short len)
 		{
 			length_temp = MIN(ota_info.data_len, len);
 			//system_printf("---write f, addr[0x%08x], len[%d]", ota_info.s_addr + ota_info.offset, length_temp);
-			hal_spifiash_write(ota_info.s_addr + ota_info.offset, (unsigned char *)data, length_temp);
+			hal_spiflash_write(ota_info.s_addr + ota_info.offset, (unsigned char *)data, length_temp);
 			ota_info.offset += length_temp;
 			ota_info.data_len -=length_temp;
 		}
