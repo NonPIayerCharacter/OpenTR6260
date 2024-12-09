@@ -235,7 +235,18 @@ static sys_err_t sys_system_event_debug(system_event_t *event)
 		break;
 	}
 #else
-    SYS_LOGD("vif[%d],event[%d]", event->vif, event->event_id);
+	int vif;
+
+	vif = event->vif;
+	switch(event->event_id)
+	{
+		case SYSTEM_EVENT_WIFI_READY:
+			SYS_LOGD("SYSTEM_EVENT_WIFI_READY");
+			wifi_set_ready_full_flag(1);
+			break;
+		default:
+			SYS_LOGD("vif[%d],event[%d]", event->vif, event->event_id);
+	}
 #endif
 	return SYS_OK;
 }

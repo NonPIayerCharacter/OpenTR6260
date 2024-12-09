@@ -72,6 +72,7 @@ network_db_t network_db;
 wifi_nv_info_t wifi_nv_info;
 wifi_ap_config_t g_softap_conf;
 static uint8_t wifi_init_complete_flag = 0;
+static uint8_t wifi_ready_flag = 0;
 /****************************************************************************
 * 	                                          Global Function Prototypes
 ****************************************************************************/
@@ -225,6 +226,30 @@ bool wifi_is_ready(void)
    }else{
         return true;
    }
+}
+
+void wifi_set_ready_full_flag(uint8_t init_complete_flag)
+{
+    if(init_complete_flag != 0)
+    {
+        wifi_ready_flag = 1;
+    }
+    else
+    {
+        wifi_ready_flag = 0;
+    }
+}
+
+bool wifi_is_ready_full(void)
+{
+    if(wifi_ready_flag == 0)
+    {
+        return false;
+    }
+    else
+    {
+        return true;
+    }
 }
 
 sys_err_t wifi_system_init(void)

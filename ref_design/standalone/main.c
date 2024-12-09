@@ -14,34 +14,18 @@ TaskHandle_t g_sys_task_handle1;
 
 void sys_task1(void* pvParameters)
 {
+	while(!wifi_is_ready_full())
+	{
+		sys_delay_ms(20);
+		system_printf("wifi not ready!\n");
+	}
+
+	Main_Init();
 	while(true)
 	{
 		sys_delay_ms(1000);
 		Main_OnEverySecond();
-		//system_printf("Main_OnEverySecond\n");
 	}
-}
-
-int32_t Wifi_Init(void)
-{
-	int option = TR_PSM_OPTION_RF_INIT;
-	ef_get_env_blob(NV_PSM_OPTION, &option, 2, NULL);
-
-	if(option == TR_PSM_OPTION_RF_INIT)
-	{
-		wifi_drv_init();
-		standalone_main();
-		wifi_load_nv_cfg();
-	}
-	else
-	{
-		extern int nrf_rtc_cal(void);
-		nrf_rtc_cal();
-	}
-
-	//util_cli_freertos_init(util_cmd_run_command);
-
-	return 0;
 }
 
 int main()
@@ -71,11 +55,14 @@ int main()
 	partion_init();
 	easyflash_init();
 	TrPsmInit();
-	Wifi_Init();
-	time_check_temp();
+
+	wifi_drv_init();
+	standalone_main();
+	wifi_load_nv_cfg();
+
+	//time_check_temp();
 	Hal_WtdSoftTask_Init();
 
-	Main_Init();
 	xTaskCreate(
 		sys_task1,
 		"OpenBeken",
