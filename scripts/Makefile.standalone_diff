@@ -432,5 +432,5 @@ CSRCS   += system_wifi.c system_lwip.c system_network.c  event_loop.c event_defa
 
 #// --------------------------------------------------
 
-include $(TOPDIR)/scripts/openbeken.mk
+include $(TOPDIR)/../../platforms/TR6260/openbeken.mk
 include $(TOPDIR)/scripts/rules.mk
