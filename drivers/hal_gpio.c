@@ -208,12 +208,12 @@ int32_t gpio_config(DRV_GPIO_CONFIG *pGpioConfig)
 	 if(pGpiocfgTemp->GPIO_Dir == DRV_GPIO_DIR_INPUT) //set corresponding bit to 0
 	 {
 		RegTmp &=~(1<<(pGpiocfgTemp->GPIO_Pin));
-		OUT32(GPIO_PULL_EN,RegTmp);
+		OUT32(GPIO_CHNNL_DIR,RegTmp);
 	 }
 	 else if(pGpiocfgTemp->GPIO_Dir == DRV_GPIO_DIR_OUTPUT)//set corresponding bit to 1
 	 {
 		RegTmp |=1<<(pGpiocfgTemp->GPIO_Pin);
-		OUT32(GPIO_PULL_EN,RegTmp);
+		OUT32(GPIO_CHNNL_DIR,RegTmp);
 	 }
 	 else
 	 {
@@ -1217,6 +1217,7 @@ int wakeup = 0;
 	OUT32(0x601224, 0x0);
 
  }
+
 /*******************************************************************************
  * Function: 
  * Description: 
