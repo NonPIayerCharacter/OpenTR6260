@@ -199,7 +199,8 @@ err_t low_level_init(struct netif *netif)
 	netif->mtu = netifMTU;
 
 	/* broadcast capability */
-	netif->flags = NETIF_FLAG_BROADCAST | NETIF_FLAG_ETHARP | NETIF_FLAG_LINK_UP;
+	// added | NETIF_FLAG_IGMP; for multicast
+	netif->flags = NETIF_FLAG_BROADCAST | NETIF_FLAG_ETHARP | NETIF_FLAG_LINK_UP | NETIF_FLAG_IGMP;
 
 	return ERR_OK;
 }
