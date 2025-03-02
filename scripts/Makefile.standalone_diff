@@ -419,7 +419,7 @@ endif
 
 #DEFINE += -DENABLE_SET_MAC_ADDR -DOS_CALC_CPU_USAGE
 
-CSRCS	+= main.c standalone.c
+CSRCS	+= standalone.c
 LFLAGS	+= $(TOPDIR)/ref_design/standalone/server_root_cert.pem.txt.o 
 
 DEFINE	+= -DTELNETD_ENABLE

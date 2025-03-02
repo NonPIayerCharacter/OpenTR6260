@@ -88,13 +88,4 @@
 /* print debug information of flash */
 #define PRINT_DEBUG
 
-#define PARTION_INDEX_MAX			8
-
-#define PARTION_LMA_ANDES1		0x4000
-#define PARTION_LMA_ANDES2		0x80000
-#define PARTION_LMA_NV_USR		0xB6000
-#define PARTION_LMA_LFS			0xD6000
-#define PARTION_LMA_NV_BACKUP	0xFE000
-#define PARTION_LMA_NV_AMT		0xFF000
-
 #endif /* EF_CFG_H_ */

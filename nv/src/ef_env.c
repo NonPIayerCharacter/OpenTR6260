@@ -213,6 +213,13 @@ static unsigned int  env_total_len = 0;
 
 
 
+#define PARTION_INDEX_MAX		8
+
+#define PARTION_LMA_ANDES1		0x4000
+#define PARTION_LMA_ANDES2		0x80000
+#define PARTION_LMA_NV_USR		0xEC000
+#define PARTION_LMA_NV_BACKUP	0xFE000
+#define PARTION_LMA_NV_AMT		0xFF000
 
 #define KEY_MAX_LEN		16
 
@@ -1821,7 +1828,7 @@ static void ef_env_init_index(int  partion_index) {
     EF_ASSERT(env_total_len);
     EF_ASSERT(env_total_len % EF_ERASE_MIN_SIZE == 0);
 
-    //EF_DEBUG("partion start address is 0x%08X, size is %d bytes.\n",  env_start_addr, env_total_len);
+    EF_DEBUG("partion start address is 0x%08X, size is %d bytes.\n",  env_start_addr, env_total_len);
 
     if (env_total_len > EF_ERASE_MIN_SIZE) {
         ef_load_env();
@@ -1909,34 +1916,28 @@ int partion_info_get(char *key, unsigned int *addr, unsigned int * length)
 	int i;
 	unsigned int base = 0, len = 0;
 	struct _partion_info * pPartion;
-
 	if (partionDev.num == 0)
 	{
 		/* just compatibility non-partioned table*/
 		if (!strncmp(key, PARTION_NAME_CPU1, strlen(PARTION_NAME_CPU1)))
 		{
-			base = PARTION_LMA_ANDES1;
-			len = 0x7C000;
-		}
-		else if (!strncmp(key, PARTION_NAME_CPU2, strlen(PARTION_NAME_CPU2)))
-		{
-			base = PARTION_LMA_ANDES2;
-			len = 0x7C000;
+			base = 0x7000;
+			len = 0xAF000;
 		}
 		else if (!strncmp(key, PARTION_NAME_NV_USR, strlen(PARTION_NAME_NV_USR)))
 		{
 			base = PARTION_LMA_NV_USR;
-			len = 0x20000;
-		}
-		else if (!strncmp(key, PARTION_NAME_LFS, strlen(PARTION_NAME_LFS)))
-		{
-			base = PARTION_LMA_LFS;
-			len = 0x20000;
+			len = 0x12000;
 		}
 		else if (!strncmp(key, PARTION_NAME_NV_AMT, strlen(PARTION_NAME_NV_AMT)))
 		{
 			base = PARTION_LMA_NV_AMT;
 			len = 0x1000;
+		}
+		else if (!strncmp(key, PARTION_NAME_DATA_OTA, strlen(PARTION_NAME_DATA_OTA)))
+		{
+			base = 0xB6000;
+			len = 0x36000;
 		}
 		else
 		{
@@ -1994,22 +1995,18 @@ void partion_print_all(void)
 	}
 }
 
-#ifdef _USE_OTA_DIFF
 #define PARTION_BASE 0x6000
-#else
-#define PARTION_BASE			0x3000
-#endif
-#define PARTION_SIZE			0x1000
+#define PARTION_SIZE 0x1000
 
 
 int partion_init(void)
 {
 	struct sector_meta_data sector;
 	struct env_meta_data env;
-
-	if (read_sector_meta_data(PARTION_BASE, &sector, false) != 0)
+	int res = read_sector_meta_data(PARTION_BASE, &sector, false);
+	if (res != 0)
 	{
-		return 0;
+		return res;
 	}
 
 	/* sector has ENV */

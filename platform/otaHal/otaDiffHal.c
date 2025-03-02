@@ -168,7 +168,7 @@ char otaHal_done(void)
         #endif
     }
 #ifndef ENABLE_EZIOT
-    system_reset(STARTUP_TYPE_OTA);
+    //system_reset(STARTUP_TYPE_OTA);
 #endif
     return 0;
 }

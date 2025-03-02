@@ -173,6 +173,7 @@ void ef_port_env_unlock(void) {
  * @param ... args
  *
  */
+extern void system_vprintf(const char* f, va_list args);
 void ef_log_debug(const char *file, const long line, const char *format, ...) {
 
 #ifdef PRINT_DEBUG
@@ -181,6 +182,7 @@ void ef_log_debug(const char *file, const long line, const char *format, ...) {
 
     /* args point to the first variable parameter */
     va_start(args, format);
+    system_vprintf(format, args);
 
     /* You can add your code under here. */
     va_end(args);
@@ -202,6 +204,7 @@ void ef_log_info(const char *format, ...) {
     va_start(args, format);
 
     /* You can add your code under here. */
+    system_vprintf(format, args);
     
     va_end(args);
 }
@@ -211,7 +214,6 @@ void ef_log_info(const char *format, ...) {
  * @param format output format
  * @param ... args
  */
-extern void system_vprintf(const char *f, va_list args);
 void ef_print(const char *format, ...) {
     va_list args;
 
